@@ -1,9 +1,6 @@
 pipeline {
     agent {
-        docker {
-            image "python:3.11-slim"
-            args "--network idp-network"
-        }
+        docker {image "python:3.11-slim"}
     }
 
     environment {
