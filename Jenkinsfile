@@ -16,21 +16,24 @@ pipeline {
                 checkout scm
             }
         }
-
-        stage("Install PIP"){
-            steps {
-                sh '''
-                    apt-get update
-                    apt-get install -y python3-pip
-                '''
-            }
-        }
-        
+      
 
         stage("Install Dependencies") {
             steps {
-                echo "Installing Python dependencies..."
-                sh "pip install -r requirements.txt"
+                sh '''
+                    # 1. Create a local, isolated Python directory in your workspace
+                    python3 -m venv my_env --without-pip
+                    
+                    # 2. Activate the local environment
+                    . my_env/bin/activate
+                    
+                    # 3. Bootstrap pip locally without needing root or apt-get
+                    python3 -m ensurepip --default-pip
+                    
+                    # 4. Upgrade pip and install your project requirements
+                    pip install --upgrade pip
+                    pip install -r requirements.txt
+                '''
             }
         }
 
