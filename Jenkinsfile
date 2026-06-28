@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        docker {image "python:3.11-slim"}
-    }
+    agent any
 
     environment {
         AIRFLOW_URL     = "http://host.docker.internal:8080"
@@ -17,6 +15,13 @@ pipeline {
                 echo "Checking out code..."
                 checkout scm
             }
+        }
+
+        steps {
+        sh '''
+            sudo apt-get update
+            sudo apt-get install -y python3-pip
+        '''
         }
 
         stage("Install Dependencies") {
