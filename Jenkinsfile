@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image "python:3.11-slim"
+            args "--network idp-network"
+        }
+    }
 
     environment {
         AIRFLOW_URL     = "http://host.docker.internal:8080"
