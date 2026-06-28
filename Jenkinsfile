@@ -20,20 +20,8 @@ pipeline {
 
         stage("Install Dependencies") {
             steps {
-                sh '''
-                    # 1. Create a local, isolated Python directory in your workspace
-                    python3 -m venv my_env --without-pip
-                    
-                    # 2. Activate the local environment
-                    . my_env/bin/activate
-                    
-                    # 3. Bootstrap pip locally without needing root or apt-get
-                    python3 -m ensurepip --default-pip
-                    
-                    # 4. Upgrade pip and install your project requirements
-                    pip install --upgrade pip
-                    pip install -r requirements.txt
-                '''
+                echo "Installing Python dependencies..."
+                sh "pip3 install -r requirements.txt"
             }
         }
 
