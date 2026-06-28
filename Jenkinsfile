@@ -17,12 +17,15 @@ pipeline {
             }
         }
 
-        steps {
-        sh '''
-            sudo apt-get update
-            sudo apt-get install -y python3-pip
-        '''
+        stage("Install PIP"){
+            steps {
+                sh '''
+                    sudo apt-get update
+                    sudo apt-get install -y python3-pip
+                '''
+            }
         }
+        
 
         stage("Install Dependencies") {
             steps {
